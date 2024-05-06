@@ -136,4 +136,4 @@ if __name__ == '__main__':
     if os.path.exists("./static") == False:
         os.makedirs("./static")
         os.makedirs("./static/systems")
-    app.run(debug=False)
+    app.run(host='0.0.0.0', port=5000)
