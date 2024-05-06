@@ -8,6 +8,7 @@ import os
 from selenium_stealth import stealth
 from selenium.webdriver.chrome.service import Service
 import imageio.v2 as imageio
+import platform
 
 app = Flask(__name__)
 
@@ -37,7 +38,12 @@ def latestImage(task_id):
 
 
 def trackSystem(task_id, systemURL):
-    service = Service(executable_path='./chromedriver.exe')
+    os_name = platform.system()
+
+    if os_name == "Windows":
+        service = Service(executable_path='./chromedriver.exe')
+    elif os_name == "Linux":
+        service = Service(executable_path='./chromedriver')
     options = webdriver.ChromeOptions()
     options.add_argument("start-maximized")
     options.add_argument("--headless")
@@ -45,6 +51,7 @@ def trackSystem(task_id, systemURL):
     options.add_experimental_option('useAutomationExtension', False)
     driver = webdriver.Chrome(
         options=options, service=service)
+
 
     stealth(driver,
             languages=["en-US", "en"],
@@ -57,6 +64,7 @@ def trackSystem(task_id, systemURL):
 
 
     url = systemURL  # change the url
+
 
     driver.get(url)
 
